@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   }
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}`
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&units=metric&appid=${process.env.API_KEY}`
     );
 
   const data = await res.json();
