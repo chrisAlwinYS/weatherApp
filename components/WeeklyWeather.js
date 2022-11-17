@@ -4,24 +4,34 @@ import Image from 'next/dist/client/image'
 
 export default function WeeklyWeather({ weeklyWeather, timezone }) {
   return (
-    <div className='hourly'>
-        <div className='hourly__inner'>
-            { weeklyWeather.length > 0 && weeklyWeather.map((weather, index) => (
-                <div className='hourly__box-wrapper' key={weather.dt}>
-                    <div className='hourly__box'>
-                        <span className={`hourly__time ${index==0 ? 'hourly__time-now':""}`}>
-                                
-                                {index == 0 ? "TODAY" : moment.unix(weather.dt).tz(timezone).format("dddd")}
+    <div className='weekly'>
+        <h2 className='weekly__title'>7 Day Forcast</h2>
+        <div className='weekly__inner'>
+            { weeklyWeather.length > 0 && weeklyWeather.map((weather, index) => {
+                if (index === 0) {
+                    return;
+                }
+
+                return (
+                    <div className='weekly__box-wrapper' key={weather.dt}>
+                    <div className='weekly__box'>
+                        <span className='weekly__time'>
+                                {moment.unix(weather.dt).tz(timezone).format("dddd").toUpperCase()}
                         </span>
                         <Image 
                             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} 
                             alt={weather.weather[0].description} 
                             width="100"
                             height="100"/>
-                            <p>{weather.temp.max.toFixed(0)}&deg;C | {weather.temp.min.toFixed(0)}&deg;C</p>
+                            <div className='weekly__temp'>
+                                <p>{weather.temp.max.toFixed(0)}&deg;C</p>
+                                <p>|</p>
+                                <p>{weather.temp.min.toFixed(0)}&deg;C</p>
+                            </div>
                     </div>
                 </div>
-            ))}
+                )
+            })}
         </div>
     </div>
   )
