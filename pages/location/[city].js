@@ -87,7 +87,7 @@ export default function City({
   return (
     <div>
       <Head>
-        <title>{city.name} Weather - Stormie Weather App</title>
+        <title>{city.name} Weather</title>
       </Head>
 
       <div className="page-wrapper">
@@ -95,7 +95,7 @@ export default function City({
           <Link href="/">
             <a className="back-link">&larr; Home</a>
           </Link>
-          <SearchBox placeholder="Search for a location" />
+          <SearchBox placeholder={`${city.name} - try searching for another city`} />
           <TodaysWeather
             city={city}
             weather={weeklyWeather[0]}
