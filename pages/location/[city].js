@@ -87,7 +87,7 @@ export default function City({
   return (
     <div>
       <Head>
-        <title>{city.name} Weather</title>
+        <title>{city.name} Weather - Stormie Weather App</title>
       </Head>
 
       <div className="page-wrapper">
