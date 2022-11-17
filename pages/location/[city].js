@@ -2,6 +2,7 @@ import React from "react";
 import cities from "../../lib/city.list.json";
 import TodaysWeather from "../../components/TodaysWeather";
 import HourlyWeather from "../../components/HourlyWeather";
+import WeeklyWeather from "../../components/WeeklyWeather";
 import Link from "next/link";
 import Head from "next/head";
 import SearchBox from "../../components/SearchBox";
@@ -34,6 +35,7 @@ export async function getServerSideProps(context) {
   const hourlyWeather = getHourlyWeather(data.hourly, data.timezone);
 
   const weeklyWeather = data.daily;
+
 
   return {
     props: {
@@ -100,6 +102,7 @@ export default function City({
             timezone={timezone}
           />
           <HourlyWeather hourlyWeather={hourlyWeather} timezone={timezone} />
+          <WeeklyWeather weeklyWeather={weeklyWeather} timezone={timezone}/>
         </div>
       </div>
     </div>
