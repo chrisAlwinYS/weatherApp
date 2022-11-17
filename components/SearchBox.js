@@ -2,6 +2,7 @@ import React from "react";
 import cities from "../lib/city.list.json";
 import Link from "next/link";
 import Router from "next/router";
+
 export default function SearchBox() {
   const [query, setQuery ] = React.useState("");
   const[results, setResults] = React.useState([]);
@@ -24,20 +25,23 @@ export default function SearchBox() {
 
       let matchingCities=[];
 
-      for(let city of cities){
-          if (matchingCities.length >= 5){
-              break;
+      if (value.length > 3) {
+        for (let city of cities) {
+          if (matchingCities.length >= 10) {
+            break;
           }
-
+  
           const match = city.name.toLowerCase().startsWith(value.toLowerCase());
-
-          if(match){
-              const cityData = {
-                  ...city,
-                  slug: `${city.name.toLowerCase().replace(/ /g,"-")}-${city.id}`
-              }
-              matchingCities.push(cityData);
+  
+          if (match) {
+            const cityData = {
+              ...city,
+              slug: `${city.name.toLowerCase().replace(/ /g, "-")}-${city.id}`,
+            };
+  
+            matchingCities.push(cityData);
           }
+        }
       }
      
       return setResults(matchingCities);

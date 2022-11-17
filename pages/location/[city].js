@@ -5,20 +5,31 @@ import HourlyWeather from "../../components/HourlyWeather";
 import Link from "next/link";
 import Head from "next/head";
 import SearchBox from "../../components/SearchBox";
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
 export async function getServerSideProps(context) {
   const city = getCityId(context.params.city);
 
   // Todo, handle city not found.
+  if (!city) {
+    return {
+      notFound: true,
+    };
+  }
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}&exclude=minutely&units=metric`
-  );
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}`
+    );
 
   const data = await res.json();
+  
 
   // Todo, handle data not found.
+  if(!data) {
+    return {
+      notFound: true,
+    }
+  }
 
   const hourlyWeather = getHourlyWeather(data.hourly, data.timezone);
 
