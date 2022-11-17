@@ -5,6 +5,9 @@
 
 // Components
 @import "./components/TodaysWeather.scss";
+@import './components/HourlyWeather.scss';
+@import './components/WeeklyWeather.scss';
+@import './components/SearchBox.scss';
 
 // global
 body {
@@ -34,7 +37,7 @@ h5,
 h6 {
   margin-top: 0;
 }
-}
+
 
 .page-wrapper {
   margin: 50px 0;
@@ -61,61 +64,5 @@ h6 {
   justify-content: center;
 }
 
-.search {
-  position: relative;
 
-  input {
-    width: 100%;
-    padding: 15px 15px;
-    border-radius: 10px;
-    border: 2px solid $primary;
-    font-size: 1.25rem;
-    color: $dark;
-    font-family: "Nunito", sans-serif;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  ul {
-    position: absolute;
-    top: calc(100% + 10px);
-    width: 100%;
-    padding: 5px 15px;
-    margin: 0;
-    list-style: none;
-    border: 2px solid $primary;
-    border-radius: 10px;
-    z-index: 100;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-    li {
-      &:not(:last-child) {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      }
-
-      a {
-        display: block;
-        text-decoration: none;
-        color: $dark;
-        font-weight: $f-semi-bold;
-        transition: all 0.3s ease;
-        width: 100%;
-        padding: 10px 0;
-
-        &:hover {
-          color: $primary;
-        }
-      }
-    }
-  }
-
-  &__no-results {
-    padding: 15px 0;
-  }
-}
 

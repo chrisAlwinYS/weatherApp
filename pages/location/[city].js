@@ -2,27 +2,40 @@ import React from "react";
 import cities from "../../lib/city.list.json";
 import TodaysWeather from "../../components/TodaysWeather";
 import HourlyWeather from "../../components/HourlyWeather";
+import WeeklyWeather from "../../components/WeeklyWeather";
 import Link from "next/link";
 import Head from "next/head";
 import SearchBox from "../../components/SearchBox";
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
 export async function getServerSideProps(context) {
   const city = getCityId(context.params.city);
 
   // Todo, handle city not found.
+  if (!city) {
+    return {
+      notFound: true,
+    };
+  }
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}&exclude=minutely&units=metric`
-  );
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&units=metric&appid=${process.env.API_KEY}`
+    );
 
   const data = await res.json();
+  
 
   // Todo, handle data not found.
+  if(!data) {
+    return {
+      notFound: true,
+    }
+  }
 
   const hourlyWeather = getHourlyWeather(data.hourly, data.timezone);
 
   const weeklyWeather = data.daily;
+
 
   return {
     props: {
@@ -82,13 +95,14 @@ export default function City({
           <Link href="/">
             <a className="back-link">&larr; Home</a>
           </Link>
-          <SearchBox placeholder="Search for a location" />
+          <SearchBox placeholder={`${city.name} - try searching for another city`} />
           <TodaysWeather
             city={city}
             weather={weeklyWeather[0]}
             timezone={timezone}
           />
           <HourlyWeather hourlyWeather={hourlyWeather} timezone={timezone} />
+          <WeeklyWeather weeklyWeather={weeklyWeather} timezone={timezone}/>
         </div>
       </div>
     </div>
